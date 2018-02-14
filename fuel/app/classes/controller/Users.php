@@ -13,20 +13,27 @@ class Controller_Users extends Controller_Base
             {
             	return $this->respuesta(400, 'Algun paramentro esta vacio', '');
             }if(isset($_POST['x']) || isset($_POST['y'])){
+            		
             		if(empty($_POST['x']) || empty($_POST['y'])){
 	            		return $this->respuesta(400, 'Coordenadas vacias', '');
 	            	}
-            	}else{
+            	}
+            	else
+            	{
             		return $this->respuesta(400, 'Coordenadas no definidas', '');
             	}
-            if(!empty($_POST['userName']) && !empty($_POST['password']) && !empty($_POST['email'])){
-            	if(strlen($_POST['password']) < 5){
+            if(!empty($_POST['userName']) && !empty($_POST['password']) && !empty($_POST['email']))
+            {
+            	if(strlen($_POST['password']) < 5)
+            	{
             		return $this->respuesta(400, 'La contraseña debe tener al menos 5 caracteres', '');
             	}
 				$input = $_POST;
 	            $newUser = $this->newUser($input);
 	           	$json = $this->saveUser($newUser);
-	        }else{
+	        }
+	        else
+	        {
 	        	return $this->respuesta(400, 'Algun campo vacio', '');
 	        }
         }catch (Exception $e){

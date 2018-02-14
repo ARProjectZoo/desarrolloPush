@@ -1,6 +1,7 @@
 <?php 
 use \Firebase\JWT\JWT;
 define('MY_KEY', 'tokens_key');
+define('ID_ADMIN', 1);
 class Controller_Base extends Controller_Rest
 {
 	private static $secret_key = 'ARZOO';
