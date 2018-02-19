@@ -202,19 +202,9 @@ class Controller_Users extends Controller_Base
     	
     	 if($arrayAuthenticated['authenticated']){
 	    		$decodedToken = JWT::decode($arrayAuthenticated["data"], MY_KEY, array('HS256'));
-	    		//Model_Users::find($decodedToken->id);
-	    		
-	    		// if(!empty($user))
-	    		// {
-	    			//reset($user);
 	    			$arrayData = array();
-	    			$arrayData['userName'] = $decodedToken->userName;
-	    			//$arrayData['userName'] = $decodedToken->userName;
-	    			//$arrayData['']
-	    			return $this->respuesta(200, 'info User', $arrayData);
-				// }else{
-	   //  			return $this->respuesta(202, 'Usuario no encontrado','');
-    	//	}
+	    			$arrayData['userName'] = $decodedToken->userName;	    			
+	    			return $this->respuesta(200, 'info User', $arrayData);				
     	}else{
     			return $this->respuesta(401, 'NO AUTORIZACION','');
     		}

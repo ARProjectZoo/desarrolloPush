@@ -100,6 +100,8 @@ class Controller_Animals extends Controller_Base
    }
   }
  }
+
+ //borrar
 public function post_delete()
     {
      $authenticated = $this->authenticate();
@@ -159,39 +161,76 @@ public function post_delete()
             ));
             return $json;
          }
-     }
+      }
 
- private function newAnimal($input)
- {
-  $animal = Model_Animals();
-  $animal->name = $input['name'];
-  $animal->description = $input['description'];
-  $animal->photo = "";
-  $animal->x = $input['x'];
-  $animal->y = $input['y'];
-  $animal->id_continent = $input['id_continent'];
-  $animal->id_user = $this-> ID_ADMIN;
-  return $animal;
- }
- private function saveAnimal($animal)
+      //visualizacion
+      public function get_update()
     {
-     $animalExists = Model_Animals::find('all', 
-            array('where' => array(
-       array('name', '=', $animal->name),
-                  )
-       
-           );
-     if(empty($animalExists))
-     {
-      $animaltoSave = $animal;
-      $animaltoSave->save();
-      $arrayData = array();
-      $arrayData['name'] = $animal->name;
-      return $this->respuesta(201, 'Animal creado', $arrayData);
+
+        $authenticated = $this->authenticate();
+        $arrayAuthenticated = json_decode($authenticated, true);
+          if($arrayAuthenticated['authenticated'])
+          {
+          $decodedToken = $this->decode($arrayAuthenticated['data']);
+              if ($decodedToken->id != ID_ADMIN)
+              {
+
+              $elements = Model_Elements::find('all', 
+                                array('where' => array(
+                                  array('id_user', '=', $decodedToken->id), 
+                                  )
+                                )
+                              );
+            if(!empty($elements)){
+              return $this->respuesta(200, 'mostrando lista de elementos del usuario', Arr::reindex($elements));               
+            }
+            else
+            {
+              
+              $json = $this->response(array(
+                         'code' => 202,
+                         'message' => 'Aun no tienes ningun elemento',
+                          'data' => ''
+                      ));
+                      return $json;
+            }
+          }
+        }
+      }
+
+      private function newAnimal($input)
+      {
+      $animal = Model_Animals();
+      $animal->name = $input['name'];
+      $animal->description = $input['description'];
+      $animal->photo = "";
+      $animal->x = $input['x'];
+      $animal->y = $input['y'];
+      $animal->id_continent = $input['id_continent'];
+      $animal->id_user = $this-> ID_ADMIN;
+      return $animal;
      }
-     else
+     private function saveAnimal($animal)
      {
-      return $this->respuesta(204, 'Animal ya creado', '');
-     }
-    }
+         $animalExists = Model_Animals::find('all', 
+                array('where' => array(
+           array('name', '=', $animal->name),
+                      )
+           
+               );
+        if(empty($animalExists))
+        {
+          $animaltoSave = $animal;
+          $animaltoSave->save();
+          $arrayData = array();
+          $arrayData['name'] = $animal->name;
+          return $this->respuesta(201, 'Animal creado', $arrayData);
+        }
+         else
+        {
+          return $this->respuesta(204, 'Animal ya creado', '');
+        }
+      }
+
+
 }

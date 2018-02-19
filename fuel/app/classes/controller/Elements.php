@@ -199,4 +199,40 @@ class Controller_Elements extends Controller_Base
             return $json;
          }
      }
- }
+
+    //update
+    public function get_update()
+    {
+
+        $authenticated = $this->authenticate();
+        $arrayAuthenticated = json_decode($authenticated, true);
+          if($arrayAuthenticated['authenticated'])
+          {
+          $decodedToken = $this->decode($arrayAuthenticated['data']);
+              if ($decodedToken->id != ID_ADMIN)
+              {
+
+              $elements = Model_Elements::find('all', 
+                                array('where' => array(
+                                  array('id_user', '=', $decodedToken->id), 
+                                  )
+                                )
+                              );
+            if(!empty($elements)){
+              return $this->respuesta(200, 'mostrando lista de elementos del usuario', Arr::reindex($elements));               
+            }
+            else
+            {
+              
+              $json = $this->response(array(
+                         'code' => 202,
+                         'message' => 'Aun no tienes ningun elemento',
+                          'data' => ''
+                      ));
+                      return $json;
+            }
+          }
+        }
+      }
+      
+  }
