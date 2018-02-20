@@ -156,6 +156,8 @@ class Controller_Elements extends Controller_Base
      }
     }
 
+    
+
     public function post_delete()
     {
      $authenticated = $this->authenticate();
@@ -258,11 +260,14 @@ class Controller_Elements extends Controller_Base
 
               $elements = Model_Elements::find('all');
                 if(!empty($elements)){
-                  $data = Arr::reindex($elements);
+                  foreach ($elements as $key => $element) {
+                    $arrayElement[] = $element;
+                  }
+                  //$data = Arr::reindex($elements);
                   $json = $this->response(array(
                     'code' => 200,
                     'message' => 'mostrando lista de elementos del usuario', 
-                    'data' => $data
+                    'data' => $arrayElement
                     )); 
                     return $json; 
                 }
