@@ -224,24 +224,22 @@ class Controller_Elements extends Controller_Base
 
 
 
-    /*public function get_elements()
+    public function get_elements()
     {
-        $elementExists = Model_Elements::find('all');
-        $element = \Arr::pluck($elementExists, 'id');
-        $idElements = [];
-        for($element as $elements){
-          $idElements += $elements
+        $element = array();        
+        $idelements = [];
+        foreach ($element as $key => $elements) {
+          $elements += Model_Elements::find('all');
+          $idelements = $elements;
         }
-        $data = $idElements;
+        $data = $idelements;
         $json = $this->response(array(
                     'code' => 200,
                     'message' => 'mostrando lista de elementos del usuario', 
                     'data' => $data
                     )); 
                     return $json; 
-        
-       }
-    }*/
+    }
 
 
 
@@ -263,7 +261,6 @@ class Controller_Elements extends Controller_Base
                   foreach ($elements as $key => $element) {
                     $arrayElement[] = $element;
                   }
-                  //$data = Arr::reindex($elements);
                   $json = $this->response(array(
                     'code' => 200,
                     'message' => 'mostrando lista de elementos del usuario', 

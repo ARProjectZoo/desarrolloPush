@@ -182,44 +182,30 @@ public function post_delete()
          }
       }
 
-      //visualizacion
-      public function get_update()
+
+
+
+
+    public function get_animals()
     {
+        $animal = array();
+        $idanimals = [];
+        foreach ($animal as $key => $animals) {
+          $animal += Model_Animals::find('all');
+          $idanimals = $elements;        }
+        $data = $idanimals;
+        $json = $this->response(array(
+                    'code' => 200,
+                    'message' => 'mostrando lista de animales del usuario', 
+                    'data' => $data
+                    )); 
+                    return $json;      
+    }
 
-        $authenticated = $this->authenticate();
-        $arrayAuthenticated = json_decode($authenticated, true);
-          if($arrayAuthenticated['authenticated'])
-          {
-          $decodedToken = $this->decode($arrayAuthenticated['data']);
-              if ($decodedToken->id != ID_ADMIN)
-              {
+    
 
-              $elements = Model_Elements::find('all', 
-                                array('where' => array(
-                                  array('id_user', '=', $decodedToken->id), 
-                                  )
-                                )
-                              );
-            if(!empty($elements)){
-              return $this->respuesta(200, 'mostrando lista de elementos del usuario', Arr::reindex($elements));               
-            }
-            else
-            {
-              
-              $json = $this->response(array(
-                         'code' => 202,
-                         'message' => 'Aun no tienes ningun elemento',
-                          'data' => ''
-                      ));
-                      return $json;
-            }
-          }
-        }
-      }
-
-
-
-      public function get_download()
+    //visualizacion
+    public function get_download()
     {
 
         $authenticated = $this->authenticate();
@@ -238,7 +224,7 @@ public function post_delete()
                   //$data = Arr::reindex($elements);
                   $json = $this->response(array(
                     'code' => 200,
-                    'message' => 'mostrando lista de elementos del usuario', 
+                    'message' => 'mostrando lista de animales del usuario', 
                     'data' => $arrayAnimals
                     )); 
                     return $json; 
@@ -261,6 +247,8 @@ public function post_delete()
     
     }
 
+
+
       private function newAnimal($input)
       {
       $animal = Model_Animals();
@@ -273,6 +261,9 @@ public function post_delete()
       $animal->id_user = $this-> ID_ADMIN;
       return $animal;
      }
+
+
+     
      private function saveAnimal($animal)
      {
          $animalExists = Model_Animals::find('all', 

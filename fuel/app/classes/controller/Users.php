@@ -76,7 +76,7 @@ class Controller_Users extends Controller_Base
     public function post_login()
     {	try{
 	        if ( !isset($_POST['userName']) || !isset($_POST['password']) ) {
-	        	return $this->respuesta(400, 'alguno de los datos esta vacio', '');
+	        	return $this->respuesta(400, 'Alguno de los datos esta vacio', '');
 	        }else if( !empty($_POST['userName']) && !empty($_POST['password'])){
 	            $input = $_POST;
 	            $user = Model_Users::find('all', 

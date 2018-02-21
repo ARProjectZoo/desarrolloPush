@@ -182,8 +182,10 @@ class Controller_Stories extends Controller_Base
     	$authenticated = $this->authenticate();
     	$arrayAuthenticated = json_decode($authenticated, true);
     	 $decodedToken = JWT::decode($arrayAuthenticated["data"], MY_KEY, array('HS256'));
-    	 if($arrayAuthenticated['authenticated']){
-	    		if(isset($_GET['idStory'])){
+    	 if($arrayAuthenticated['authenticated'])
+    	 {
+	    		if(isset($_GET['idStory']))
+	    		{
 	    			$idStory = $_GET['idStory'];
 	    			$story = Model_Stories::find('all',
 	    											array('where' => array(
@@ -194,7 +196,9 @@ class Controller_Stories extends Controller_Base
 			            					);
 	    			if(!empty($story)){
 	    				return $this->respuesta(200, 'mostrando el recuerdo', Arr::reindex($story));	    					
-	    			}else{
+	    			}
+	    			else
+	    			{
 	    					$json = $this->response(array(
 				       		     'code' => 202,
 				       		     'message' => 'Aun no tienes ningun recuerdo',
@@ -203,7 +207,9 @@ class Controller_Stories extends Controller_Base
 				       		 	return $json;
 	    			}
     		
-	    		}else{
+	    		}
+	    		else
+	    		{
 		    		$stories = Model_Stories::find('all', 
 				            						array('where' => array(
 				            							array('id_user', '=', $decodedToken->id), 
@@ -222,7 +228,9 @@ class Controller_Stories extends Controller_Base
 					       		 	return $json;
 		    			}
 	    		}
-    		}else{
+    	}
+    	else
+    	{
     			
     			$json = $this->response(array(
 			       		     'code' => 401,
@@ -230,7 +238,7 @@ class Controller_Stories extends Controller_Base
 			       		    	'data' => ''
 			       		 	));
 			       		 	return $json;
-    		}
+    	}
     }
 }
 
