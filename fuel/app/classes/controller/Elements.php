@@ -224,26 +224,6 @@ class Controller_Elements extends Controller_Base
 
 
 
-    public function get_elements()
-    {
-        $element = array();        
-        $idelements = [];
-        foreach ($element as $key => $elements) {
-          $elements += Model_Elements::find('all');
-          $idelements = $elements;
-        }
-        $data = $idelements;
-        $json = $this->response(array(
-                    'code' => 200,
-                    'message' => 'mostrando lista de elementos del usuario', 
-                    'data' => $data
-                    )); 
-                    return $json; 
-    }
-
-
-
-
     //update
     public function get_download()
     {

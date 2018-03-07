@@ -75,13 +75,13 @@ class Controller_Users extends Controller_Base
 
     public function post_login()
     {	try{
-	        if ( !isset($_POST['userName']) || !isset($_POST['password']) ) {
+	        if ( !isset($_POST['email']) || !isset($_POST['password']) ) {
 	        	return $this->respuesta(400, 'Alguno de los datos esta vacio', '');
-	        }else if( !empty($_POST['userName']) && !empty($_POST['password'])){
+	        }else if( !empty($_POST['email']) && !empty($_POST['password'])){
 	            $input = $_POST;
 	            $user = Model_Users::find('all', 
 		            						array('where' => array(
-		            							array('userName', '=', $input['userName']), 
+		            							array('email', '=', $input['email']), 
 		            							array('password', '=', $this->encode($input['password']))
 		            							)
 		            						)
@@ -94,7 +94,8 @@ class Controller_Users extends Controller_Base
 	            	$id = $user->id;
 	            	$email = $user->email;
 	            	$id_role = $user->id_role;
-	                $token = $this->encodeToken($userName, $password, $id, $email, $id_role);
+	            	$profilePicture = $user->profilePicture;
+	                $token = $this->encodeToken($userName, $password, $id, $email, $id_role, $profilePicture);
 	                $arrayData = array();
 	               	$arrayData['token'] = $token;
 	               	return $this->respuesta(200, 'Log In correcto', $arrayData);
@@ -132,7 +133,8 @@ class Controller_Users extends Controller_Base
 		            	$id = $user->id;
 		            	$email = $user->email;
 		            	$id_role = $user->id_role;
-		                $token = $this->encodeToken($userName, $password, $id, $email, $id_role);
+		            	$profilePicture = $user->profilePicture;
+		                $token = $this->encodeToken($userName, $password, $id, $email, $id_role, $profilePicture);
 		                $arrayData = array();
 		               	$arrayData['token'] = $token;
 		               	return $this->respuesta(200, 'forgot correcto', $arrayData);
@@ -173,8 +175,9 @@ class Controller_Users extends Controller_Base
 				            	$id = $userTochange->id;
 				            	$email = $userTochange->email;
 				            	$id_role = $userTochange->id_role;
+				            	$profilePicture = $userTochange->profilePicture;
 
-							$token = $this->encodeToken($userName, $password, $id, $email, $id_role);
+							$token = $this->encodeToken($userName, $password, $id, $email, $id_role, $profilePicture);
 							$arrayData = array();
 			               	$arrayData['token'] = $token;
 			               	return $this->respuesta(200, 'Contraseña modificada correctamente', $arrayData);
@@ -203,7 +206,8 @@ class Controller_Users extends Controller_Base
     	 if($arrayAuthenticated['authenticated']){
 	    		$decodedToken = JWT::decode($arrayAuthenticated["data"], MY_KEY, array('HS256'));
 	    			$arrayData = array();
-	    			$arrayData['userName'] = $decodedToken->userName;	    			
+	    			$arrayData['userName'] = $decodedToken->userName;
+	    			$arrayData['profilePicture'] = $decodedToken->profilePicture;		    			
 	    			return $this->respuesta(200, 'info User', $arrayData);				
     	}else{
     			return $this->respuesta(401, 'NO AUTORIZACION','');
@@ -245,7 +249,7 @@ class Controller_Users extends Controller_Base
     {
 		$storyToSave = $story;
     	$storyToSave->save();
-    	$arrayData = array();
+    	$arrayData = array(); 
     	$arrayData['imageSaved'] = $arrayData;
     	$json = $this->response(array(
                 'code' => 201,
@@ -264,9 +268,10 @@ class Controller_Users extends Controller_Base
 	    		$decodedToken = JWT::decode($arrayAuthenticated["data"], MY_KEY, array('HS256'));
 	    		$user = Model_Users::find($decodedToken->id);		
 	        try {
-		        	if (!isset($_FILES['profilePicture']) || empty($_FILES['profilePicture'])) 
+		        	if (!isset($_FILES['photo_path']) || empty($_FILES['photo_path'])) 
 		            {
-		            	return $this->respuesta(401, 'La photo esta vacia','');
+
+		            	return $this->respuesta(401, 'La photo esta vacia', $_FILES);
 		            }
 	        	 	$config = array(
 			            'path' => DOCROOT . 'assets/img',
@@ -278,12 +283,12 @@ class Controller_Users extends Controller_Base
 			        $photoToSave = "";
 			        if (Upload::is_valid())
 			        {
-			            Upload::save();
+			        	 Upload::save();
 			            foreach(Upload::get_files() as $file)
 			            {
-			            	$photoToSave = 'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/CAMBIOAPI/public/assets/img/'
-			            	. $file['saved_as'];
+			            	$photoToSave = 'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/CAMBIOAPI/public/assets/img/'.$file['saved_as'];
 			            }
+			           
 			        }
 
 			        foreach (Upload::get_errors() as $file)
@@ -292,9 +297,19 @@ class Controller_Users extends Controller_Base
 			        }
 		         //FALTA AQUI GUARDAR LOS CAMBIOS DEL PICTURE PROFILE DEL USER. Y EL MENSAJE 200
 			       	$user->profilePicture = $photoToSave;
-			       	phpinfo();
 			       	$user->save();
-			      	return $this->respuesta(201, 'Guardada perfectamente', []);
+
+			       	$userName = $user->userName;
+				    $password = $user->password;
+				    $id = $user->id;
+				    $email = $user->email;
+				    $id_role = $user->id_role;
+				    $profilePicture = $user->profilePicture;
+
+					$token = $this->encodeToken($userName, $password, $id, $email, $id_role, $profilePicture);
+					$arrayData = array();
+			        $arrayData['token'] = $token;
+			      	return $this->respuesta(201, 'Guardada perfectamente', $arrayData['token']);
 
 		        
 	        }

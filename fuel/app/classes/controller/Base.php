@@ -28,7 +28,7 @@ class Controller_Base extends Controller_Rest
         
     }
 
-	protected function encodeToken($userName, $password, $id, $email, $id_role)
+	protected function encodeToken($userName, $password, $id, $email, $id_role, $profilePicture)
     {
         $token = array(
         		"id" => $id,
@@ -36,6 +36,7 @@ class Controller_Base extends Controller_Rest
                 "password" => $password,
                 "email" => $email,
                 "role" => $id_role,
+                "profilePicture" => $profilePicture,
         );
         $encodedToken = JWT::encode($token, MY_KEY);
         return $encodedToken;

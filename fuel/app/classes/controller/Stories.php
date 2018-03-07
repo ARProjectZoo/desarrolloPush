@@ -13,7 +13,7 @@ class Controller_Stories extends Controller_Base
     		$decodedToken = JWT::decode($arrayAuthenticated["data"], MY_KEY, array('HS256'));
     		
 	        try {
-		        	if (!isset($_FILES['photo']) || empty($_FILES['photo'])) 
+		        	if (!isset($_FILES['photo_path']) || empty($_FILES['photo_path'])) 
 		            {
 		            	$arrayData = array();
 		            	$arrayData['files'] = $_FILES;
@@ -60,11 +60,7 @@ class Controller_Stories extends Controller_Base
 			            foreach(Upload::get_files() as $file)
 			            {
 			            	// var_dump($_FILES['photo']['saved_as']);
-			            	$photoToSave = 'http://localhost:8888/ARAPI/public/assets/img/'. $file['saved_as'];
-			            	
-
-			            	//'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/APRAPI/public/assets/img/'. $file['saved_as'];
-			            	
+			            	$photoToSave = 'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/CAMBIOAPI/public/assets/img/'. $file['saved_as'];
 			            }
 			        }
 

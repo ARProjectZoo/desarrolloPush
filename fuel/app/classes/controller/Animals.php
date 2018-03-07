@@ -186,21 +186,6 @@ public function post_delete()
 
 
 
-    public function get_animals()
-    {
-        $animal = array();
-        $idanimals = [];
-        foreach ($animal as $key => $animals) {
-          $animal += Model_Animals::find('all');
-          $idanimals = $elements;        }
-        $data = $idanimals;
-        $json = $this->response(array(
-                    'code' => 200,
-                    'message' => 'mostrando lista de animales del usuario', 
-                    'data' => $data
-                    )); 
-                    return $json;      
-    }
 
     
 
