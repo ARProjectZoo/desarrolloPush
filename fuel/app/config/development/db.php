@@ -7,8 +7,8 @@ return array(
 	'default' => array(
 		'connection'  => array(
 			'dsn'        => 'mysql:host=localhost;dbname=zoo',
-			'username'   => 'root',
-			'password'   => 'root',
+			'username'   => 'zoo',
+			'password'   => 'XRSP6nF40HQe8jAi',
 		),
 	),
 );
