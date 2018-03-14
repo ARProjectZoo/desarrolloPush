@@ -43,15 +43,13 @@ class Animals
             )
     
         )
-    );
-        
-       
+    ); 
         //AMERICA DEL NORTE
-        \DB::query("INSERT INTO animals(id, name, description, photo, x, y, id_continent, id_user)VALUES(NULL,'Osos Pardo', 'Animal de America del Norte', 'admin','40.408174','-3.762891','3','1');")->execute();
+        \DB::query("INSERT INTO animals(id, name, description, photo, x, y, id_continent, id_user)VALUES(NULL,'Osos Pardo', 'Animal de America del Norte', 'photo','40.408174','-3.762891','3','1');")->execute();
         //AMERICA DEL SUR
-        \DB::query("INSERT INTO animals(id, name, description, photo, x, y, id_continent, id_user)VALUES(NULL,'Gorilas', 'Animal de America del Sur', 'admin','1','40.409498','-3.765400','1');")->execute();
+        \DB::query("INSERT INTO animals(id, name, description, photo, x, y, id_continent, id_user)VALUES(NULL,'Gorilas', 'Animal de America del Sur', 'photo','40.409498','-3.765400','4','1');")->execute();
         //AMERICA CENTRAL
-        \DB::query("INSERT INTO animals(id, name, description, photo, x, y, id_continent, id_user)VALUES(NULL,'Jirafas', 'America Central y Caribe', 'admin','40.409962','-3.765217','5','1');")->execute();
+        \DB::query("INSERT INTO animals(id, name, description, photo, x, y, id_continent, id_user)VALUES(NULL,'Jirafas', 'America Central y Caribe', 'photo','40.409962','-3.765217','5','1');")->execute();
     }
 
     function down()
