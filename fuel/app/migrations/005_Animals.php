@@ -44,20 +44,14 @@ class Animals
     
         )
     );
-        //AFRICA
-        \DB::query("INSERT INTO animals(id, name, description, photo, x, y, id_continent, id_user)VALUES(NULL,'Dromedario', 'animal de africa', 'admin','1','0','1','1');")->execute();
-        //ASIA
-        \DB::query("INSERT INTO animals(id, name, description, photo, x, y, id_continent, id_user)VALUES(NULL,'Oso Panda', 'animal de Asia', 'admin','1','0','2','1');")->execute();
+        
+       
         //AMERICA DEL NORTE
-        \DB::query("INSERT INTO animals(id, name, description, photo, x, y, id_continent, id_user)VALUES(NULL,'Buho Real', 'Animal de America del Norte', 'admin','1','0','3','1');")->execute();
+        \DB::query("INSERT INTO animals(id, name, description, photo, x, y, id_continent, id_user)VALUES(NULL,'Osos Pardo', 'Animal de America del Norte', 'admin','40.408174','-3.762891','3','1');")->execute();
         //AMERICA DEL SUR
-        \DB::query("INSERT INTO animals(id, name, description, photo, x, y, id_continent, id_user)VALUES(NULL,'Ñandu', 'Animal de America del Sur', 'admin','1','0','4','1');")->execute();
+        \DB::query("INSERT INTO animals(id, name, description, photo, x, y, id_continent, id_user)VALUES(NULL,'Gorilas', 'Animal de America del Sur', 'admin','1','40.409498','-3.765400','1');")->execute();
         //AMERICA CENTRAL
-        \DB::query("INSERT INTO animals(id, name, description, photo, x, y, id_continent, id_user)VALUES(NULL,'Oso Hormiguero', 'America Central y Caribe', 'admin','1','0','5','1');")->execute();
-        //EUROPA
-        \DB::query("INSERT INTO animals(id, name, description, photo, x, y, id_continent, id_user)VALUES(NULL,'Lobo Iberico', 'Animal de Europa', 'admin','1','0','6','1');")->execute();
-        //OCEANIA
-        \DB::query("INSERT INTO animals(id, name, description, photo, x, y, id_continent, id_user)VALUES(NULL,'Koala', 'animal de Oceania', 'admin','1','0','7','1');")->execute();
+        \DB::query("INSERT INTO animals(id, name, description, photo, x, y, id_continent, id_user)VALUES(NULL,'Jirafas', 'America Central y Caribe', 'admin','40.409962','-3.765217','5','1');")->execute();
     }
 
     function down()
